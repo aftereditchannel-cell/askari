@@ -3,41 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ورود و ثبت نام مرحله‌ای | کیومرث</title>
+<title>ورود | کیومرث</title>
+
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet"/>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{height:100vh;display:flex;justify-content:center;align-items:center;font-family:'Vazir',sans-serif;background:radial-gradient(circle at top right,#2a0a4a,#0f172a 60%);color:#fff;overflow:hidden;position:relative;}
-body::before{content:'';position:absolute;width:420px;height:420px;background:radial-gradient(circle,#a855f7,#7c3aed,transparent 70%);top:-140px;right:-140px;filter:blur(60px);opacity:0.30;z-index:0;}
-.card{width:90%;max-width:500px;padding:45px 30px;border-radius:30px;background:rgba(255,255,255,0.07);backdrop-filter:blur(15px);box-shadow:0 0 25px rgba(168,85,247,0.18),0 20px 50px rgba(0,0,0,0.4);position:relative;z-index:2;animation:fade .4s ease;}
-h2{text-align:center;margin-bottom:25px;font-weight:700;}
-input, select{width:100%;padding:12px;margin-bottom:15px;border-radius:12px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.12);color:#fff;font-size:14px;outline:none;}
-input::placeholder{color:rgba(255,255,255,0.6);}
-button{width:100%;padding:14px;border:none;border-radius:15px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-size:15px;cursor:pointer;transition:.2s;}
-button:disabled{opacity:0.5;cursor:not-allowed;}
-button:hover:enabled{opacity:.85;}
-button:active:enabled{transform:scale(.97);}
-.hidden{display:none;}
-.select-wrapper{position:relative;margin-bottom:15px;padding:1px;border-radius:12px;background:linear-gradient(135deg,#a855f7,#7c3aed);}
-.select-wrapper select{background:#0f172a;color:#fff;border-radius:12px;border:none;padding:12px;appearance:none;cursor:pointer;}
-.select-wrapper::after{content:'▼';position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#c084fc;pointer-events:none;}
-@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+/* ================= RESET ================= */
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  height:100%;
+}
+
+/* ================= BODY ================= */
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Vazir',sans-serif;
+  background:radial-gradient(circle at top right,#2a0a4a,#0f172a 60%);
+  color:#fff;
+  overflow:hidden;
+  position:relative;
+}
+
+body::before{
+  content:'';
+  position:absolute;
+  width:420px;
+  height:420px;
+  background:radial-gradient(circle,#a855f7,#7c3aed,transparent 70%);
+  top:-140px;
+  right:-140px;
+  filter:blur(60px);
+  opacity:0.3;
+  z-index:0;
+}
+
+/* ================= CARD ================= */
+.card{
+  width:90%;
+  max-width:420px;
+  padding:45px 30px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.07);
+  backdrop-filter:blur(15px);
+  box-shadow:
+    0 0 25px rgba(168,85,247,0.18),
+    0 20px 50px rgba(0,0,0,0.4);
+  position:relative;
+  z-index:2;
+  animation:fade .4s ease;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* ================= HEADINGS ================= */
+h2{
+  text-align:center;
+  margin-bottom:25px;
+  font-weight:700;
+}
+
+/* ================= INPUT ================= */
+input, select{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  font-family:'Vazir';
+  font-size:14px;
+  outline:none;
+}
+
+input::placeholder{
+  color:rgba(255,255,255,0.6);
+}
+
+/* ================= SELECT WRAPPER ================= */
+.select-wrapper{
+  position:relative;
+  width:100%;
+  margin-bottom:20px;
+  border-radius:16px;
+  padding:1px;
+  background:linear-gradient(135deg,#a855f7,#7c3aed);
+}
+
+.select-wrapper select{
+  width:100%;
+  border:none;
+  border-radius:15px;
+  background:#0f172a;
+  color:#fff;
+  padding:12px;
+  font-size:14px;
+  appearance:none;
+  outline:none;
+  cursor:pointer;
+}
+
+.select-wrapper::after{
+  content:"▼";
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  color:#c084fc;
+  pointer-events:none;
+}
+
+/* ================= BUTTON ================= */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#a855f7,#7c3aed);
+  color:#fff;
+  font-family:'Vazir';
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+button:hover:enabled{
+  opacity:.85;
+}
+
+button:active:enabled{
+  transform:scale(.97);
+}
+
+/* ================= SWITCH ================= */
+.switch{
+  text-align:center;
+  margin-top:15px;
+  font-size:13px;
+}
+
+.switch a{
+  color:#c084fc;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* موبایل */
+@media (max-width:768px){
+  body::before{
+    filter:blur(40px);
+    opacity:0.25;
+  }
+}
 </style>
 </head>
 <body>
+
 <div class="card">
+
   <!-- LOGIN -->
   <div id="loginBox">
     <h2>ورود</h2>
     <input type="number" id="nationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
     <button onclick="login()">ورود</button>
-    <div class="switch">ثبت نام نکرده‌اید؟ <a onclick="toggle()">ثبت نام</a></div>
+    <div class="switch">
+      ثبت نام نکرده‌اید؟ <a onclick="toggle()">ثبت نام</a>
+    </div>
   </div>
 
   <!-- REGISTER -->
   <div id="registerBox" class="hidden">
-    <h2>انتخاب نقش</h2>
+    <h2>انتخاب سطح دسترسی</h2>
+
     <div class="select-wrapper">
       <select id="roleSelect">
         <option value="">انتخاب کنید...</option>
@@ -46,123 +207,182 @@ button:active:enabled{transform:scale(.97);}
         <option value="admin">مدیر / معاون</option>
       </select>
     </div>
-    <button id="continueBtn" disabled onclick="nextStep()">ادامه</button>
 
-    <!-- فرم مرحله‌ای دانش‌آموز -->
-    <div id="studentForm" class="hidden">
-      <h2>اطلاعات پایه دانش‌آموز</h2>
-      <input type="text" id="sName" placeholder="نام">
-      <input type="text" id="sFamily" placeholder="نام خانوادگی">
-      <input type="date" id="sBirth">
-      <button id="studentNext1" disabled onclick="studentStep2()">ادامه</button>
-    </div>
-    <div id="studentStep2" class="hidden">
-      <h2>اطلاعات تماس و شناسایی</h2>
-      <input type="number" id="sNationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
-      <input type="tel" id="sMobile" placeholder="شماره موبایل">
-      <input type="email" id="sEmail" placeholder="ایمیل">
-      <label>آپلود کارت ملی / شناسنامه<input type="file" id="sIDUpload"></label>
-      <button id="studentNext2" disabled onclick="studentStep3()">ادامه</button>
-    </div>
-    <div id="studentStep3" class="hidden">
-      <h2>اطلاعات  تحصیلی</h2>
+    <button id="continueBtn" onclick="nextStep()" disabled>ادامه</button>
+
+    <!-- فرم دانش‌آموز -->
+    <div id="studentForm" class="hidden" style="width:100%; display:flex; flex-direction:column; align-items:center;">
+      <h2>اطلاعات دانش‌آموز</h2>
+
       <div class="select-wrapper">
-        <select id="sSchool">
-          <option value="">انتخاب مدرسه...</option>
-          <option value="فضا">هنرستان فضا</option>
-          <option value="سما">هنرستان سما</option>
+        <select id="studentGrade">
+          <option value="">انتخاب پایه...</option>
+          <option value="ابتدایی">ابتدایی</option>
+          <option value="راهنمایی">راهنمایی</option>
+          <option value="دبیرستان">دبیرستان</option>
         </select>
       </div>
-      <div class="select-wrapper">
-        <select id="sGrade">
-          <option value="">پایه تحصیلی...</option>
-          <option value="اول ابتدایی">اول ابتدایی</option>
-          <option value="دوم ابتدایی">دوم ابتدایی</option>
-          <option value="دوازدهم">دوازدهم</option>
+
+      <div class="select-wrapper hidden" id="studentSubjectWrapper">
+        <select id="studentSubject" multiple size="4">
+          <!-- گزینه‌ها JS اضافه می‌کند -->
         </select>
       </div>
-      <div class="select-wrapper" id="sFieldWrapper">
-        <select id="sField">
-          <option value="">رشته تحصیلی...</option>
+
+      <div class="select-wrapper hidden" id="studentFieldWrapper">
+        <select id="studentField">
+          <option value="">انتخاب رشته...</option>
           <option value="ریاضی">ریاضی</option>
           <option value="تجربی">تجربی</option>
           <option value="انسانی">انسانی</option>
+          <option value="فنی">فنی</option>
+          <option value="کاردانش">کاردانش</option>
         </select>
       </div>
-      <h3>علاقه‌مندی‌ها / مهارت‌ها</h3>
-      <button type="button" onclick="toggleSkill(this)">نقاشی</button>
-      <button type="button" onclick="toggleSkill(this)">موسیقی</button>
-      <button type="button" onclick="toggleSkill(this)">ورزش</button>
-      <button id="studentFinish" disabled onclick="finishStudent()">ثبت نهایی</button>
+
+      <input type="text" id="studentName" placeholder="نام">
+      <input type="text" id="studentFamily" placeholder="نام خانوادگی">
+      <input type="file" id="studentIDFile" accept="image/*">
+      <button id="studentSubmit" onclick="finishRegister('دانش‌آموز')" disabled>ثبت نهایی</button>
     </div>
 
     <!-- فرم استاد -->
-    <div id="teacherForm" class="hidden">
+    <div id="teacherForm" class="hidden" style="width:100%; display:flex; flex-direction:column; align-items:center;">
       <h2>اطلاعات استاد</h2>
-      <input type="text" id="tName" placeholder="نام">
-      <input type="text" id="tFamily" placeholder="نام خانوادگی">
-      <input type="text" id="tSubjects" placeholder="درس/رشته">
-      <input type="number" id="tNationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
-      <label>آپلود کارت شناسایی<input type="file" id="tIDUpload"></label>
-      <button id="teacherFinish" disabled onclick="finishTeacher()">ثبت نهایی</button>
+      <input type="text" id="teacherName" placeholder="نام">
+      <input type="text" id="teacherFamily" placeholder="نام خانوادگی">
+      <input type="number" id="teacherNationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
+      <div class="select-wrapper">
+        <select id="teacherGrades" multiple size="4">
+          <option value="دهم">دهم</option>
+          <option value="یازدهم">یازدهم</option>
+          <option value="دوازدهم">دوازدهم</option>
+        </select>
+      </div>
+      <div class="select-wrapper">
+        <select id="teacherSubjects" multiple size="4">
+          <option value="ریاضی">ریاضی</option>
+          <option value="فیزیک">فیزیک</option>
+          <option value="شیمی">شیمی</option>
+          <option value="زیست">زیست</option>
+          <option value="فارسی">فارسی</option>
+        </select>
+      </div>
+      <input type="file" id="teacherIDFile" accept="image/*">
+      <button id="teacherSubmit" onclick="finishRegister('استاد')" disabled>ثبت نهایی</button>
     </div>
 
-    <!-- فرم مدیر/معاون -->
-    <div id="adminForm" class="hidden">
-      <h2>اطلاعات مدیر/معاون</h2>
-      <input type="text" id="aName" placeholder="نام">
-      <input type="text" id="aFamily" placeholder="نام خانوادگی">
-      <input type="number" id="aNationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
+    <!-- فرم مدیر / معاون -->
+    <div id="adminForm" class="hidden" style="width:100%; display:flex; flex-direction:column; align-items:center;">
+      <h2>اطلاعات مدیر / معاون</h2>
+      <input type="text" id="adminName" placeholder="نام">
+      <input type="text" id="adminFamily" placeholder="نام خانوادگی">
+      <input type="number" id="adminNationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
       <input type="text" id="schoolName" placeholder="نام مدرسه">
       <input type="number" id="studentCount" placeholder="تعداد دانش‌آموزان">
-      <button id="adminFinish" disabled onclick="finishAdmin()">ثبت نهایی</button>
+      <input type="file" id="schoolPhoto" accept="image/*">
+      <button id="adminSubmit" onclick="finishRegister('مدیر / معاون')" disabled>ثبت نهایی</button>
     </div>
 
-    <div class="switch">قبلاً ثبت نام کرده‌اید؟ <a onclick="toggle()">ورود</a></div>
+    <div class="switch">
+      قبلاً ثبت نام کرده‌اید؟ <a onclick="toggle()">ورود</a>
+    </div>
   </div>
+
 </div>
+
 <script>
+// ---------- LOGIN ----------
 function login(){
   const code = document.getElementById("nationalCode").value;
-  if(code.length!==10){alert("کد ملی شما معتبر نیست"); return;}
+  if(code.length !== 10){
+    alert("کد ملی شما معتبر نیست");
+    return;
+  }
   alert("ورود انجام شد (MVP)");
 }
-document.getElementById("nationalCode").addEventListener("input",function(){if(this.value.length>10)this.value=this.value.slice(0,10);});
 
-const roleSelect=document.getElementById("roleSelect"),continueBtn=document.getElementById("continueBtn");
-roleSelect.addEventListener("change",()=>{continueBtn.disabled=roleSelect.value==='';});
-function toggle(){document.getElementById("loginBox").classList.toggle("hidden");document.getElementById("registerBox").classList.toggle("hidden");}
+document.getElementById("nationalCode").addEventListener("input", function(){
+  if(this.value.length > 10) this.value = this.value.slice(0,10);
+});
+
+// ---------- REGISTER ----------
+const roleSelect = document.getElementById("roleSelect");
+const continueBtn = document.getElementById("continueBtn");
+
+roleSelect.addEventListener("change", function(){
+  continueBtn.disabled = this.value === "";
+});
+
+// نمایش فرم مرحله‌ای
 function nextStep(){
-  const role=roleSelect.value;
+  const role = roleSelect.value;
   document.querySelector(".select-wrapper").classList.add("hidden");
   continueBtn.classList.add("hidden");
-  if(role==='student')document.getElementById("studentForm").classList.remove("hidden");
-  else if(role==='teacher')document.getElementById("teacherForm").classList.remove("hidden");
-  else if(role==='admin')document.getElementById("adminForm").classList.remove("hidden");
+
+  if(role === "student"){
+    document.getElementById("studentForm").classList.remove("hidden");
+  } else if(role === "teacher"){
+    document.getElementById("teacherForm").classList.remove("hidden");
+  } else if(role === "admin"){
+    document.getElementById("adminForm").classList.remove("hidden");
+  }
 }
 
-// دانش‌آموز مرحله‌ای
-const sStep1Fields=[document.getElementById('sName'),document.getElementById('sFamily'),document.getElementById('sBirth')];
-sStep1Fields.forEach(f=>f.addEventListener('input',()=>{document.getElementById('studentNext1').disabled=sStep1Fields.some(i=>i.value==='');}));
-const sStep2Fields=[document.getElementById('sNationalCode'),document.getElementById('sMobile'),document.getElementById('sEmail'),document.getElementById('sIDUpload')];
-sStep2Fields.forEach(f=>f.addEventListener('input',()=>{document.getElementById('studentNext2').disabled=sStep2Fields.some(i=>i.value==='')||document.getElementById('sNationalCode').value.length!==10;}));
-document.getElementById('sNationalCode').addEventListener('input',function(){if(this.value.length>10)this.value=this.value.slice(0,10);});
-const skills=[];function toggleSkill(btn){btn.classList.toggle('selected');const val=btn.textContent;if(btn.classList.contains('selected'))skills.push(val); else skills.splice(skills.indexOf(val),1);document.getElementById('studentFinish').disabled=skills.length===0||document.getElementById('sSchool').value===''||document.getElementById('sGrade').value==='';}
-document.getElementById('sSchool').addEventListener('change',()=>{document.getElementById('studentFinish').disabled=skills.length===0||document.getElementById('sSchool').value===''||document.getElementById('sGrade').value==='';});
-document.getElementById('sGrade').addEventListener('change',()=>{document.getElementById('studentFinish').disabled=skills.length===0||document.getElementById('sSchool').value===''||document.getElementById('sGrade').value==='';});
-function studentStep2(){document.getElementById('studentForm').classList.add('hidden');document.getElementById('studentStep2').classList.remove('hidden');}
-function studentStep3(){document.getElementById('studentStep2').classList.add('hidden');document.getElementById('studentStep3').classList.remove('hidden');}
-function finishStudent(){alert('ثبت نام دانش‌آموز انجام شد!');}
-// استاد
-const tFields=[document.getElementById('tName'),document.getElementById('tFamily'),document.getElementById('tSubjects'),document.getElementById('tNationalCode'),document.getElementById('tIDUpload')];
-tFields.forEach(f=>f.addEventListener('input',()=>{document.getElementById('teacherFinish').disabled=tFields.some(i=>i.value==='')||document.getElementById('tNationalCode').value.length!==10;}));
-document.getElementById('tNationalCode').addEventListener('input',function(){if(this.value.length>10)this.value=this.value.slice(0,10);});
-function finishTeacher(){alert('ثبت نام استاد انجام شد!');}
-// مدیر/معاون
-const aFields=[document.getElementById('aName'),document.getElementById('aFamily'),document.getElementById('aNationalCode'),document.getElementById('schoolName'),document.getElementById('studentCount')];
-aFields.forEach(f=>f.addEventListener('input',()=>{document.getElementById('adminFinish').disabled=aFields.some(i=>i.value==='')||document.getElementById('aNationalCode').value.length!==10;}));
-document.getElementById('aNationalCode').addEventListener('input',function(){if(this.value.length>10)this.value=this.value.slice(0,10);});
-function finishAdmin(){alert('ثبت نام مدیر/معاون انجام شد!');}
+// ---------- STUDENT LOGIC ----------
+const studentGrade = document.getElementById("studentGrade");
+const studentFieldWrapper = document.getElementById("studentFieldWrapper");
+const studentSubjectWrapper = document.getElementById("studentSubjectWrapper");
+const studentSubject = document.getElementById("studentSubject");
+const studentSubmit = document.getElementById("studentSubmit");
+
+studentGrade.addEventListener("change", function(){
+  studentSubjectWrapper.classList.add("hidden");
+  studentFieldWrapper.classList.add("hidden");
+  studentSubject.innerHTML = "";
+
+  if(this.value === "دبیرستان"){
+    studentFieldWrapper.classList.remove("hidden");
+  } else if(this.value === "ابتدایی" || this.value === "راهنمایی"){
+    studentSubjectWrapper.classList.remove("hidden");
+    // اضافه کردن درس‌ها بر اساس پایه
+    const lessons = this.value === "ابتدایی" ? ["فارسی","ریاضی","علوم","نگارش"] : ["فارسی","ریاضی","علوم","انگلیسی"];
+    lessons.forEach(lesson => {
+      const opt = document.createElement("option");
+      opt.value = lesson;
+      opt.textContent = lesson;
+      studentSubject.appendChild(opt);
+    });
+  }
+  checkStudentForm();
+});
+
+function checkStudentForm(){
+  const name = document.getElementById("studentName").value.trim();
+  const family = document.getElementById("studentFamily").value.trim();
+  const grade = studentGrade.value;
+  const subject = (grade === "دبیرستان") ? document.getElementById("studentField").value : Array.from(studentSubject.selectedOptions).length > 0;
+  const idFile = document.getElementById("studentIDFile").files.length > 0;
+
+  studentSubmit.disabled = !(name && family && grade && subject && idFile);
+}
+
+document.getElementById("studentName").addEventListener("input", checkStudentForm);
+document.getElementById("studentFamily").addEventListener("input", checkStudentForm);
+document.getElementById("studentField").addEventListener("change", checkStudentForm);
+document.getElementById("studentSubject").addEventListener("change", checkStudentForm);
+document.getElementById("studentIDFile").addEventListener("change", checkStudentForm);
+
+// ثبت نهایی
+function finishRegister(role){
+  alert("ثبت نام شما به عنوان " + role + " انجام شد!");
+}
+
+// ---------- TOGGLE LOGIN/REGISTER ----------
+function toggle(){
+  document.getElementById("loginBox").classList.toggle("hidden");
+  document.getElementById("registerBox").classList.toggle("hidden");
+}
 </script>
 </body>
 </html>
