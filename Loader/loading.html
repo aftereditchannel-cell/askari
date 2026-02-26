@@ -6,7 +6,12 @@
   <title>کیومرث - Splash</title>
 
   <!-- فونت فارسی Vazir -->
-  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+<!-- Preload font CSS -->
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<noscript>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css">
+</noscript>
   <link rel="stylesheet" href="loader.css">
 </head>
 <body>
