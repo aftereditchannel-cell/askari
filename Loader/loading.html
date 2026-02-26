@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>کیومرث - Splash</title>
+
+  <!-- فونت فارسی Vazir -->
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="loader.css">
+</head>
+<body>
+  <div class="loader-container">
+    <div class="logo">
+      <h1>کیومرث</h1>
+      <p>Version 1.0</p>
+    </div>
+    <div class="animated-bar"></div>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    // Splash بعد از 3 ثانیه به صفحه بعد هدایت می‌شود
+    setTimeout(() => {
+      window.location.href = '../main.html'; // صفحه بعدی پروژه
+    }, 3000);
+  </script>
+</body>
+</html>
