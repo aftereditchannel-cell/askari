@@ -8,8 +8,19 @@
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet"/>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 
+/* ================= RESET ================= */
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+html,body{
+  height:100%
+}
+
+/* ================= BODY ================= */
 body{
   height:100vh;
   display:flex;
@@ -19,41 +30,48 @@ body{
   background:radial-gradient(circle at top right,#2a0a4a,#0f172a 60%);
   color:#fff;
   overflow:hidden;
+  position:relative;
 }
 
-/* نور گرادیانی */
+/* نور گرادیانی بهینه شده */
 body::before{
   content:'';
   position:absolute;
-  width:450px;
-  height:450px;
+  width:420px;
+  height:420px;
   background:radial-gradient(circle,#a855f7,#7c3aed,transparent 70%);
-  top:-150px;
-  right:-150px;
-  filter:blur(140px);
-  opacity:0.35;
+  top:-140px;
+  right:-140px;
+  filter:blur(60px); /* قبلاً 140px بود */
+  opacity:0.30;
+  z-index:0;
 }
 
+/* ================= CARD ================= */
 .card{
   width:90%;
   max-width:400px;
   padding:50px 35px;
   border-radius:30px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(30px);
+  background:rgba(255,255,255,0.07);
+  backdrop-filter:blur(15px); /* قبلاً 30px بود */
   box-shadow:
-    0 0 60px rgba(168,85,247,0.25),
-    0 25px 70px rgba(0,0,0,0.4);
+    0 0 25px rgba(168,85,247,0.18),
+    0 20px 50px rgba(0,0,0,0.4);
   position:relative;
-  transition:all .4s ease;
+  z-index:2;
+  animation:fade .4s ease;
+  will-change:transform,opacity;
 }
 
+/* ================= TITLE ================= */
 h2{
   text-align:center;
   margin-bottom:40px;
   font-weight:700;
 }
 
+/* ================= INPUT ================= */
 input{
   width:100%;
   padding:14px;
@@ -64,12 +82,19 @@ input{
   color:#fff;
   font-family:'Vazir';
   font-size:14px;
+  outline:none;
+  transition:border .2s ease;
 }
 
 input::placeholder{
   color:rgba(255,255,255,0.6);
 }
 
+input:focus{
+  border-color:#a855f7;
+}
+
+/* ================= BUTTON ================= */
 button{
   width:100%;
   padding:14px;
@@ -80,13 +105,18 @@ button{
   font-family:'Vazir';
   font-size:15px;
   cursor:pointer;
-  transition:.3s;
+  transition:opacity .2s ease, transform .1s ease;
 }
 
 button:hover{
   opacity:.85;
 }
 
+button:active{
+  transform:scale(.97);
+}
+
+/* ================= SWITCH ================= */
 .switch{
   text-align:center;
   margin-top:20px;
@@ -99,18 +129,38 @@ button:hover{
   text-decoration:none;
 }
 
+/* ================= UTIL ================= */
 .hidden{
   display:none;
 }
 
-.fade{
-  animation:fade .4s ease;
+/* ================= ANIMATION ================= */
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-@keyframes fade{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
+/* ================= MOBILE OPTIMIZE ================= */
+@media (max-width:768px){
+
+  body::before{
+    filter:blur(40px);
+    opacity:0.25;
+  }
+
+  .card{
+    padding:35px 25px;
+    backdrop-filter:blur(10px);
+  }
+
 }
+
 </style>
 </head>
 
@@ -119,7 +169,7 @@ button:hover{
 <div class="card">
 
   <!-- LOGIN -->
-  <div id="loginBox" class="fade">
+  <div id="loginBox">
     <h2>ورود</h2>
     <input type="number" id="nationalCode" placeholder="کد ملی خود را وارد کنید" maxlength="10">
     <button onclick="login()">ورود</button>
@@ -145,6 +195,7 @@ button:hover{
 </div>
 
 <script>
+
 function login(){
   const code = document.getElementById("nationalCode").value;
 
@@ -160,6 +211,7 @@ function toggle(){
   document.getElementById("loginBox").classList.toggle("hidden");
   document.getElementById("registerBox").classList.toggle("hidden");
 }
+
 </script>
 
 </body>
