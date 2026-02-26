@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورود | کیومرث</title>
+
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet"/>
+
+<style>
+body{
+  margin:0;
+  font-family:'Vazir',sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+}
+
+.container{
+  width:350px;
+  background:white;
+  padding:40px 30px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  position:relative;
+  overflow:hidden;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:30px;
+  color:#333;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:14px;
+  outline:none;
+  transition:0.3s;
+}
+
+input:focus{
+  border-color:#6a11cb;
+  box-shadow:0 0 5px rgba(106,17,203,0.3);
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+.link{
+  text-align:center;
+  margin-top:15px;
+  font-size:13px;
+  cursor:pointer;
+  color:#2575fc;
+}
+
+.form{
+  transition:0.5s;
+}
+
+.hidden{
+  opacity:0;
+  transform:translateY(40px);
+  pointer-events:none;
+  position:absolute;
+  width:100%;
+}
+
+.message{
+  text-align:center;
+  margin-bottom:15px;
+  font-size:13px;
+  color:red;
+}
+.success{
+  color:green;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LOGIN -->
+  <div id="loginForm" class="form">
+    <h2>ورود</h2>
+    <div id="loginMsg" class="message"></div>
+    <input type="number" id="nationalCode" maxlength="10"
+      placeholder="کد ملی ۱۰ رقمی خود را وارد کنید">
+    <button onclick="login()">ورود</button>
+    <div class="link" onclick="showRegister()">
+      ثبت نام نکرده‌اید؟ کلیک کنید
+    </div>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="registerForm" class="form hidden">
+    <h2>ثبت نام</h2>
+    <div id="registerMsg" class="message"></div>
+    <input type="text" id="fullname"
+      placeholder="نام و نام خانوادگی">
+    <input type="number" id="phone" maxlength="11"
+      placeholder="مثال: 09123456789">
+    <button onclick="register()">ثبت نام</button>
+    <div class="link" onclick="showLogin()">
+      قبلاً ثبت نام کرده‌اید؟ ورود
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+function login(){
+  const code = document.getElementById("nationalCode").value;
+  const msg = document.getElementById("loginMsg");
+
+  if(code.length !== 10){
+    msg.innerText = "کد ملی باید دقیقاً ۱۰ رقم باشد";
+    msg.classList.remove("success");
+    return;
+  }
+
+  msg.innerText = "ارسال شد ✔";
+  msg.classList.add("success");
+}
+
+function register(){
+  const name = document.getElementById("fullname").value;
+  const phone = document.getElementById("phone").value;
+  const msg = document.getElementById("registerMsg");
+
+  if(name.trim() === ""){
+    msg.innerText = "نام را وارد کنید";
+    msg.classList.remove("success");
+    return;
+  }
+
+  if(phone.length !== 11){
+    msg.innerText = "شماره تماس باید ۱۱ رقم باشد";
+    msg.classList.remove("success");
+    return;
+  }
+
+  msg.innerText = "ثبت نام انجام شد ✔";
+  msg.classList.add("success");
+}
+
+function showRegister(){
+  document.getElementById("loginForm").classList.add("hidden");
+  document.getElementById("registerForm").classList.remove("hidden");
+}
+
+function showLogin(){
+  document.getElementById("registerForm").classList.add("hidden");
+  document.getElementById("loginForm").classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
