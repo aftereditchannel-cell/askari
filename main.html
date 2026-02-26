@@ -1,25 +1,255 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>کیومرث - صفحه اصلی</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورود | کیومرث</title>
+
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet"/>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:'Vazir',sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  overflow:hidden;
+}
+
+/* کارت اصلی */
+.container{
+  width:90%;
+  max-width:380px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(20px);
+  padding:45px 30px;
+  border-radius:24px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.25);
+  position:relative;
+  overflow:hidden;
+  color:#fff;
+}
+
+/* عنوان */
+h2{
+  text-align:center;
+  margin-bottom:35px;
+  font-weight:600;
+}
+
+/* گروه اینپوت */
+.input-group{
+  position:relative;
+  margin-bottom:22px;
+}
+
+.input-group input{
+  width:100%;
+  padding:14px 12px;
+  border-radius:14px;
+  border:none;
+  outline:none;
+  font-size:14px;
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+  transition:0.3s;
+}
+
+.input-group input::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+
+.input-group input:focus{
+  background:rgba(255,255,255,0.3);
+  box-shadow:0 0 0 2px rgba(255,255,255,0.3);
+}
+
+/* دکمه */
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:#fff;
+  color:#6a11cb;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* لینک پایین */
+.link{
+  text-align:center;
+  margin-top:18px;
+  font-size:13px;
+  cursor:pointer;
+  opacity:0.9;
+  transition:0.3s;
+}
+
+.link:hover{
+  opacity:1;
+  text-decoration:underline;
+}
+
+/* پیام */
+.message{
+  text-align:center;
+  font-size:13px;
+  margin-bottom:15px;
+  min-height:18px;
+}
+
+.error{
+  color:#ffb3b3;
+}
+
+.success{
+  color:#b9ffb9;
+}
+
+/* انیمیشن فرم */
+.form{
+  transition:0.5s ease;
+}
+
+.hidden{
+  opacity:0;
+  transform:translateX(60px);
+  pointer-events:none;
+  position:absolute;
+  width:100%;
+}
+</style>
 </head>
 <body>
 
-<h1>صفحه اصلی پروژه</h1>
-<p>به پروژه خوش آمدید!</p>
-<button onclick="goToLogin()">ورود / ثبت نام</button>
+<div class="container">
+
+  <!-- LOGIN -->
+  <div id="loginForm" class="form">
+    <h2>ورود</h2>
+    <div id="loginMsg" class="message"></div>
+
+    <div class="input-group">
+      <input type="tel"
+             inputmode="numeric"
+             maxlength="10"
+             id="nationalCode"
+             placeholder="کد ملی ۱۰ رقمی">
+    </div>
+
+    <button onclick="login()">ورود</button>
+
+    <div class="link" onclick="showRegister()">
+      ثبت نام نکرده‌اید؟
+    </div>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="registerForm" class="form hidden">
+    <h2>ثبت نام</h2>
+    <div id="registerMsg" class="message"></div>
+
+    <div class="input-group">
+      <input type="text"
+             id="fullname"
+             placeholder="نام و نام خانوادگی">
+    </div>
+
+    <div class="input-group">
+      <input type="tel"
+             inputmode="numeric"
+             maxlength="11"
+             id="phone"
+             placeholder="مثال: 09123456789">
+    </div>
+
+    <button onclick="register()">ثبت نام</button>
+
+    <div class="link" onclick="showLogin()">
+      قبلاً ثبت نام کرده‌اید؟
+    </div>
+  </div>
+
+</div>
 
 <script>
-function goToLogin(){
-  window.location.href = "Login/auth.html";
+
+// جلوگیری از ورود کاراکتر غیرعددی
+function onlyNumbers(input, max){
+  input.value = input.value.replace(/\D/g,'').slice(0,max);
 }
-</script>
-  
-<script src="script.js"></script>
-<script>
+
+document.getElementById("nationalCode").addEventListener("input",function(){
+  onlyNumbers(this,10);
+});
+
+document.getElementById("phone").addEventListener("input",function(){
+  onlyNumbers(this,11);
+});
+
+// LOGIN
+function login(){
+  const code = nationalCode.value;
+  const msg = loginMsg;
+
+  if(code.length !== 10){
+    msg.innerText="کد ملی باید دقیقاً ۱۰ رقم باشد";
+    msg.className="message error";
+    return;
+  }
+
+  msg.innerText="ارسال شد ✔";
+  msg.className="message success";
+}
+
+// REGISTER
+function register(){
+  const name = fullname.value.trim();
+  const phone = document.getElementById("phone").value;
+  const msg = registerMsg;
+
+  if(name===""){
+    msg.innerText="نام را وارد کنید";
+    msg.className="message error";
+    return;
+  }
+
+  if(phone.length !== 11){
+    msg.innerText="شماره تماس باید ۱۱ رقم باشد";
+    msg.className="message error";
+    return;
+  }
+
+  msg.innerText="ثبت نام انجام شد ✔";
+  msg.className="message success";
+}
+
+// سوییچ فرم
+function showRegister(){
+  loginForm.classList.add("hidden");
+  registerForm.classList.remove("hidden");
+}
+
+function showLogin(){
+  registerForm.classList.add("hidden");
+  loginForm.classList.remove("hidden");
+}
+
 </script>
 
 </body>
