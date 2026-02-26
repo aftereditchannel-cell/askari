@@ -1,65 +1,103 @@
+/* ============================= */
+/* RESET */
+/* ============================= */
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
+html,body{
+  height:100%;
+}
+
+/* ============================= */
+/* BODY */
+/* ============================= */
 body{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   font-family:'Vazir',sans-serif;
-  background:radial-gradient(circle at top right,#1a0033,#000814 60%);
+  background:
+    radial-gradient(circle at top right,#1a0033 0%,#000814 60%);
   overflow:hidden;
-  color:#fff;
+  color:#ffffff;
   text-align:center;
+  position:relative;
 }
 
-/* نور گرادیانی بک */
+/* نور گرادیانی بک اصلی */
 body::before{
   content:'';
   position:absolute;
-  width:400px;
-  height:400px;
-  background:radial-gradient(circle,#c026ff,#7c3aed,transparent 70%);
-  top:-120px;
-  right:-120px;
-  filter:blur(120px);
-  opacity:0.5;
+  width:450px;
+  height:450px;
+  background:
+    radial-gradient(circle,#c026ff,#7c3aed,transparent 70%);
+  top:-140px;
+  right:-140px;
+  filter:blur(130px);
+  opacity:0.45;
+  z-index:0;
 }
 
-/* کانتینر بدون کارت */
+/* نور مکمل سمت چپ پایین */
+body::after{
+  content:'';
+  position:absolute;
+  width:350px;
+  height:350px;
+  background:
+    radial-gradient(circle,#9333ea,transparent 70%);
+  bottom:-120px;
+  left:-120px;
+  filter:blur(120px);
+  opacity:0.25;
+  z-index:0;
+}
+
+/* ============================= */
+/* CONTAINER */
+/* ============================= */
 .loader-container{
   width:90%;
   max-width:500px;
   padding:40px 20px;
   position:relative;
+  z-index:2;
 }
 
-/* اسم با گرادیان */
+/* ============================= */
+/* LOGO */
+/* ============================= */
 .logo h1{
   font-size:52px;
   font-weight:800;
   margin-bottom:12px;
+  letter-spacing:2px;
+
   background:linear-gradient(135deg,#c026ff,#7c3aed);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  letter-spacing:2px;
+
   animation:fadeIn 1s ease forwards;
 }
 
-/* ورژن */
 .logo p{
   font-size:14px;
-  opacity:0.6;
+  opacity:0.65;
   margin-bottom:60px;
   animation:fadeIn 1.4s ease forwards;
 }
 
-/* نوار لودینگ */
+/* ============================= */
+/* LOADING BAR */
+/* ============================= */
 .animated-bar{
   width:60%;
+  max-width:280px;
   margin:0 auto;
   height:8px;
   border-radius:20px;
@@ -75,21 +113,43 @@ body::before{
   left:-40%;
   width:40%;
   height:100%;
-  background:linear-gradient(90deg,#c026ff,#7c3aed);
   border-radius:20px;
-  box-shadow:0 0 20px rgba(192,38,255,0.8);
+
+  background:linear-gradient(90deg,#c026ff,#7c3aed);
+  box-shadow:0 0 25px rgba(192,38,255,0.9);
+
   animation:loading 1.2s ease-in-out infinite;
 }
 
-/* انیمیشن حرکت */
+/* ============================= */
+/* ANIMATIONS */
+/* ============================= */
 @keyframes loading{
-  0%{left:-40%;}
-  50%{left:60%;}
-  100%{left:100%;}
+  0%{ left:-40%; }
+  50%{ left:60%; }
+  100%{ left:100%; }
 }
 
-/* انیمیشن محو شدن */
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+@media (max-width:480px){
+  .logo h1{
+    font-size:40px;
+  }
+
+  .animated-bar{
+    width:70%;
+  }
 }
