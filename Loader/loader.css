@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Vazir', sans-serif;
+}
+
+.loader-container {
+  text-align: center;
+  color: white;
+}
+
+.logo h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.logo p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.animated-bar {
+  margin: 30px auto 0;
+  width: 200px;
+  height: 6px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.animated-bar::before {
+  content: '';
+  position: absolute;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: white;
+  animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+  0% { left: -50%; }
+  100% { left: 100%; }
+}
