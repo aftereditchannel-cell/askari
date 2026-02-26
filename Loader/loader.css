@@ -1,52 +1,92 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: 'Vazir', sans-serif;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-.loader-container {
-  text-align: center;
-  color: white;
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Vazir',sans-serif;
+  background:radial-gradient(circle at top right,#1a0033,#000814 60%);
+  overflow:hidden;
+  color:#fff;
 }
 
-.logo h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  margin: 0;
+/* نور گرادیانی بک */
+body::before{
+  content:'';
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle,#c026ff,#7c3aed,transparent 70%);
+  top:-120px;
+  right:-120px;
+  filter:blur(120px);
+  opacity:0.5;
 }
 
-.logo p {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  opacity: 0.8;
+/* کارت اصلی */
+.loader-container{
+  width:90%;
+  max-width:420px;
+  padding:60px 40px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(25px);
+  box-shadow:
+    0 0 40px rgba(200,0,255,0.15),
+    0 20px 60px rgba(0,0,0,0.6);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
 }
 
-.animated-bar {
-  margin: 30px auto 0;
-  width: 200px;
-  height: 6px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 3px;
-  overflow: hidden;
-  position: relative;
+/* لوگو */
+.logo h1{
+  font-size:42px;
+  font-weight:700;
+  margin-bottom:10px;
+  background:linear-gradient(135deg,#c026ff,#7c3aed);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
 }
 
-.animated-bar::before {
-  content: '';
-  position: absolute;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background: white;
-  animation: loading 1s linear infinite;
+.logo p{
+  font-size:14px;
+  opacity:0.7;
+  margin-bottom:40px;
 }
 
-@keyframes loading {
-  0% { left: -50%; }
-  100% { left: 100%; }
+/* نوار لودینگ */
+.animated-bar{
+  width:100%;
+  height:8px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  overflow:hidden;
+  position:relative;
+}
+
+.animated-bar::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-40%;
+  width:40%;
+  height:100%;
+  background:linear-gradient(90deg,#c026ff,#7c3aed);
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(192,38,255,0.8);
+  animation:loading 1.2s ease-in-out infinite;
+}
+
+/* انیمیشن حرکت نرم */
+@keyframes loading{
+  0%{left:-40%;}
+  50%{left:60%;}
+  100%{left:100%;}
 }
