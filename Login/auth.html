@@ -141,11 +141,16 @@ button{
   transition:.2s;
 }
 
-button:hover{
+button:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+button:hover:enabled{
   opacity:.85;
 }
 
-button:active{
+button:active:enabled{
   transform:scale(.97);
 }
 
@@ -189,7 +194,7 @@ button:active{
   <!-- LOGIN -->
   <div id="loginBox">
     <h2>ورود</h2>
-    <input type="number" id="securityCode" placeholder="کد امنیتی را وارد کنید">
+    <input type="number" id="nationalCode" placeholder="کد ملی ۱۰ رقمی" maxlength="10">
     <button onclick="login()">ورود</button>
     <div class="switch">
       ثبت نام نکرده‌اید؟
@@ -204,14 +209,39 @@ button:active{
     <div class="select-wrapper">
       <select id="roleSelect">
         <option value="">انتخاب کنید...</option>
-        <option>دانش‌آموز / هنرجو</option>
-        <option>اساتید / معلم‌ها</option>
-        <option>معاونین / مدیریت مجموعه</option>
-        <option>ادمین (دسترسی کامل)</option>
+        <option value="student">دانش‌آموز / هنرجو</option>
+        <option value="teacher">اساتید / معلم‌ها</option>
+        <option value="admin">معاونین / مدیریت مجموعه</option>
       </select>
     </div>
 
-    <button onclick="register()">ادامه</button>
+    <button id="continueBtn" onclick="nextStep()" disabled>ادامه</button>
+
+    <!-- مراحل ثبت نام -->
+    <div id="studentForm" class="hidden">
+      <h2>اطلاعات دانش‌آموز</h2>
+      <input type="text" id="studentName" placeholder="نام">
+      <input type="text" id="studentFamily" placeholder="نام خانوادگی">
+      <input type="text" id="studentClass" placeholder="پایه / کلاس">
+      <button onclick="finishRegister('دانش‌آموز')">ثبت نهایی</button>
+    </div>
+
+    <div id="teacherForm" class="hidden">
+      <h2>اطلاعات استاد</h2>
+      <input type="text" id="teacherName" placeholder="نام">
+      <input type="text" id="teacherFamily" placeholder="نام خانوادگی">
+      <input type="text" id="teacherSubjects" placeholder="درس/رشته">
+      <button onclick="finishRegister('استاد')">ثبت نهایی</button>
+    </div>
+
+    <div id="adminForm" class="hidden">
+      <h2>اطلاعات مدیر/معاون</h2>
+      <input type="text" id="adminName" placeholder="نام">
+      <input type="text" id="adminFamily" placeholder="نام خانوادگی">
+      <input type="text" id="schoolName" placeholder="نام مدرسه">
+      <input type="number" id="studentCount" placeholder="تعداد دانش‌آموزان">
+      <button onclick="finishRegister('مدیر/معاون')">ثبت نهایی</button>
+    </div>
 
     <div class="switch">
       قبلاً ثبت نام کرده‌اید؟
@@ -222,32 +252,52 @@ button:active{
 </div>
 
 <script>
-
+// ---------- LOGIN ----------
 function login(){
-  const code = document.getElementById("securityCode").value;
-
-  if(code.length < 4){
-    alert("کد امنیتی معتبر نیست");
+  const code = document.getElementById("nationalCode").value;
+  if(code.length !== 10){
+    alert("کد ملی شما معتبر نیست");
     return;
   }
-
   alert("ورود انجام شد (MVP)");
 }
 
-function register(){
-  const role = document.getElementById("roleSelect").value;
+// محدودیت دقیق 10 رقم
+document.getElementById("nationalCode").addEventListener("input", function(e){
+  if(this.value.length > 10) this.value = this.value.slice(0,10);
+});
 
-  if(role === ""){
-    alert("لطفاً یک گزینه انتخاب کنید");
-    return;
-  }
+// ---------- REGISTER ----------
+const roleSelect = document.getElementById("roleSelect");
+const continueBtn = document.getElementById("continueBtn");
 
-  alert("سطح انتخاب شد: " + role);
-}
+roleSelect.addEventListener("change", function(){
+  continueBtn.disabled = this.value === "";
+});
 
 function toggle(){
   document.getElementById("loginBox").classList.toggle("hidden");
   document.getElementById("registerBox").classList.toggle("hidden");
+}
+
+// نمایش فرم مرحله‌ای
+function nextStep(){
+  const role = roleSelect.value;
+  document.querySelector(".select-wrapper").classList.add("hidden");
+  continueBtn.classList.add("hidden");
+
+  if(role === "student"){
+    document.getElementById("studentForm").classList.remove("hidden");
+  } else if(role === "teacher"){
+    document.getElementById("teacherForm").classList.remove("hidden");
+  } else if(role === "admin"){
+    document.getElementById("adminForm").classList.remove("hidden");
+  }
+}
+
+// ثبت نهایی
+function finishRegister(role){
+  alert("ثبت نام شما به عنوان " + role + " انجام شد!");
 }
 
 </script>
