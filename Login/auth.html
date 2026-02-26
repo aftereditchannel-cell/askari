@@ -8,174 +8,158 @@
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet"/>
 
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  margin:0;
-  font-family:'Vazir',sans-serif;
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  font-family:'Vazir',sans-serif;
+  background:radial-gradient(circle at top right,#2a0a4a,#0f172a 60%);
+  color:#fff;
+  overflow:hidden;
 }
 
-.container{
-  width:350px;
-  background:white;
-  padding:40px 30px;
-  border-radius:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+/* نور گرادیانی */
+body::before{
+  content:'';
+  position:absolute;
+  width:450px;
+  height:450px;
+  background:radial-gradient(circle,#a855f7,#7c3aed,transparent 70%);
+  top:-150px;
+  right:-150px;
+  filter:blur(140px);
+  opacity:0.35;
+}
+
+.card{
+  width:90%;
+  max-width:400px;
+  padding:50px 35px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(30px);
+  box-shadow:
+    0 0 60px rgba(168,85,247,0.25),
+    0 25px 70px rgba(0,0,0,0.4);
   position:relative;
-  overflow:hidden;
+  transition:all .4s ease;
 }
 
 h2{
   text-align:center;
-  margin-bottom:30px;
-  color:#333;
+  margin-bottom:40px;
+  font-weight:700;
 }
 
 input{
   width:100%;
-  padding:12px;
-  margin-bottom:15px;
-  border-radius:10px;
-  border:1px solid #ddd;
+  padding:14px;
+  margin-bottom:20px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  font-family:'Vazir';
   font-size:14px;
-  outline:none;
-  transition:0.3s;
 }
 
-input:focus{
-  border-color:#6a11cb;
-  box-shadow:0 0 5px rgba(106,17,203,0.3);
+input::placeholder{
+  color:rgba(255,255,255,0.6);
 }
 
 button{
   width:100%;
-  padding:12px;
+  padding:14px;
   border:none;
-  border-radius:10px;
-  background:linear-gradient(135deg,#6a11cb,#2575fc);
-  color:white;
+  border-radius:15px;
+  background:linear-gradient(135deg,#a855f7,#7c3aed);
+  color:#fff;
+  font-family:'Vazir';
   font-size:15px;
   cursor:pointer;
-  transition:0.3s;
+  transition:.3s;
 }
 
 button:hover{
-  opacity:0.9;
+  opacity:.85;
 }
 
-.link{
+.switch{
   text-align:center;
-  margin-top:15px;
+  margin-top:20px;
   font-size:13px;
-  cursor:pointer;
-  color:#2575fc;
 }
 
-.form{
-  transition:0.5s;
+.switch a{
+  color:#c084fc;
+  cursor:pointer;
+  text-decoration:none;
 }
 
 .hidden{
-  opacity:0;
-  transform:translateY(40px);
-  pointer-events:none;
-  position:absolute;
-  width:100%;
+  display:none;
 }
 
-.message{
-  text-align:center;
-  margin-bottom:15px;
-  font-size:13px;
-  color:red;
+.fade{
+  animation:fade .4s ease;
 }
-.success{
-  color:green;
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
+
 <body>
 
-<div class="container">
+<div class="card">
 
   <!-- LOGIN -->
-  <div id="loginForm" class="form">
+  <div id="loginBox" class="fade">
     <h2>ورود</h2>
-    <div id="loginMsg" class="message"></div>
-    <input type="number" id="nationalCode" maxlength="10"
-      placeholder="کد ملی ۱۰ رقمی خود را وارد کنید">
+    <input type="number" id="nationalCode" placeholder="کد ملی خود را وارد کنید" maxlength="10">
     <button onclick="login()">ورود</button>
-    <div class="link" onclick="showRegister()">
-      ثبت نام نکرده‌اید؟ کلیک کنید
+    <div class="switch">
+      ثبت نام نکرده‌اید؟
+      <a onclick="toggle()">ثبت نام</a>
     </div>
   </div>
 
   <!-- REGISTER -->
-  <div id="registerForm" class="form hidden">
+  <div id="registerBox" class="hidden">
     <h2>ثبت نام</h2>
-    <div id="registerMsg" class="message"></div>
-    <input type="text" id="fullname"
-      placeholder="نام و نام خانوادگی">
-    <input type="number" id="phone" maxlength="11"
-      placeholder="مثال: 09123456789">
-    <button onclick="register()">ثبت نام</button>
-    <div class="link" onclick="showLogin()">
-      قبلاً ثبت نام کرده‌اید؟ ورود
+    <input type="text" placeholder="نام">
+    <input type="text" placeholder="نام خانوادگی">
+    <input type="number" placeholder="شماره تماس (مثال: 09123456789)" maxlength="11">
+    <button onclick="alert('ثبت شد (MVP)')">ثبت نام</button>
+    <div class="switch">
+      قبلاً ثبت نام کرده‌اید؟
+      <a onclick="toggle()">ورود</a>
     </div>
   </div>
 
 </div>
 
 <script>
-
 function login(){
   const code = document.getElementById("nationalCode").value;
-  const msg = document.getElementById("loginMsg");
 
   if(code.length !== 10){
-    msg.innerText = "کد ملی باید دقیقاً ۱۰ رقم باشد";
-    msg.classList.remove("success");
+    alert("کد ملی باید دقیقاً ۱۰ رقم باشد");
     return;
   }
 
-  msg.innerText = "ارسال شد ✔";
-  msg.classList.add("success");
+  alert("اطلاعات ارسال شد (MVP)");
 }
 
-function register(){
-  const name = document.getElementById("fullname").value;
-  const phone = document.getElementById("phone").value;
-  const msg = document.getElementById("registerMsg");
-
-  if(name.trim() === ""){
-    msg.innerText = "نام را وارد کنید";
-    msg.classList.remove("success");
-    return;
-  }
-
-  if(phone.length !== 11){
-    msg.innerText = "شماره تماس باید ۱۱ رقم باشد";
-    msg.classList.remove("success");
-    return;
-  }
-
-  msg.innerText = "ثبت نام انجام شد ✔";
-  msg.classList.add("success");
+function toggle(){
+  document.getElementById("loginBox").classList.toggle("hidden");
+  document.getElementById("registerBox").classList.toggle("hidden");
 }
-
-function showRegister(){
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("registerForm").classList.remove("hidden");
-}
-
-function showLogin(){
-  document.getElementById("registerForm").classList.add("hidden");
-  document.getElementById("loginForm").classList.remove("hidden");
-}
-
 </script>
 
 </body>
