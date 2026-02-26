@@ -33,7 +33,7 @@ body{
   position:relative;
 }
 
-/* نور گرادیانی بهینه شده */
+/* نور گرادیانی سبک */
 body::before{
   content:'';
   position:absolute;
@@ -42,7 +42,7 @@ body::before{
   background:radial-gradient(circle,#a855f7,#7c3aed,transparent 70%);
   top:-140px;
   right:-140px;
-  filter:blur(60px); /* قبلاً 140px بود */
+  filter:blur(60px);
   opacity:0.30;
   z-index:0;
 }
@@ -51,23 +51,21 @@ body::before{
 .card{
   width:90%;
   max-width:400px;
-  padding:50px 35px;
+  padding:45px 30px;
   border-radius:30px;
   background:rgba(255,255,255,0.07);
-  backdrop-filter:blur(15px); /* قبلاً 30px بود */
+  backdrop-filter:blur(15px);
   box-shadow:
     0 0 25px rgba(168,85,247,0.18),
     0 20px 50px rgba(0,0,0,0.4);
   position:relative;
   z-index:2;
   animation:fade .4s ease;
-  will-change:transform,opacity;
 }
 
-/* ================= TITLE ================= */
 h2{
   text-align:center;
-  margin-bottom:40px;
+  margin-bottom:35px;
   font-weight:700;
 }
 
@@ -83,15 +81,50 @@ input{
   font-family:'Vazir';
   font-size:14px;
   outline:none;
-  transition:border .2s ease;
 }
 
 input::placeholder{
   color:rgba(255,255,255,0.6);
 }
 
-input:focus{
-  border-color:#a855f7;
+/* ================= SELECT WRAPPER ================= */
+.select-wrapper{
+  position:relative;
+  margin-bottom:25px;
+  border-radius:16px;
+  padding:1px; /* برای استروک گرادیانی */
+  background:linear-gradient(135deg,#a855f7,#7c3aed);
+}
+
+.select-wrapper select{
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  border:none;
+  background:#0f172a;
+  color:#fff;
+  font-family:'Vazir';
+  font-size:14px;
+  appearance:none;
+  outline:none;
+  cursor:pointer;
+}
+
+/* فلش سفارشی */
+.select-wrapper::after{
+  content:"▼";
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  color:#c084fc;
+  pointer-events:none;
+}
+
+/* فوکوس */
+.select-wrapper select:focus{
+  box-shadow:0 0 15px rgba(168,85,247,0.5);
 }
 
 /* ================= BUTTON ================= */
@@ -105,7 +138,7 @@ button{
   font-family:'Vazir';
   font-size:15px;
   cursor:pointer;
-  transition:opacity .2s ease, transform .1s ease;
+  transition:.2s;
 }
 
 button:hover{
@@ -129,36 +162,21 @@ button:active{
   text-decoration:none;
 }
 
-/* ================= UTIL ================= */
 .hidden{
   display:none;
 }
 
-/* ================= ANIMATION ================= */
 @keyframes fade{
-  from{
-    opacity:0;
-    transform:translateY(15px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
-/* ================= MOBILE OPTIMIZE ================= */
+/* موبایل */
 @media (max-width:768px){
-
   body::before{
     filter:blur(40px);
     opacity:0.25;
   }
-
-  .card{
-    padding:35px 25px;
-    backdrop-filter:blur(10px);
-  }
-
 }
 
 </style>
@@ -171,7 +189,7 @@ button:active{
   <!-- LOGIN -->
   <div id="loginBox">
     <h2>ورود</h2>
-    <input type="number" id="nationalCode" placeholder="کد ملی خود را وارد کنید" maxlength="10">
+    <input type="number" id="securityCode" placeholder="کد امنیتی را وارد کنید">
     <button onclick="login()">ورود</button>
     <div class="switch">
       ثبت نام نکرده‌اید؟
@@ -181,11 +199,20 @@ button:active{
 
   <!-- REGISTER -->
   <div id="registerBox" class="hidden">
-    <h2>ثبت نام</h2>
-    <input type="text" placeholder="نام">
-    <input type="text" placeholder="نام خانوادگی">
-    <input type="number" placeholder="شماره تماس (مثال: 09123456789)" maxlength="11">
-    <button onclick="alert('ثبت شد (MVP)')">ثبت نام</button>
+    <h2>انتخاب سطح دسترسی</h2>
+
+    <div class="select-wrapper">
+      <select id="roleSelect">
+        <option value="">انتخاب کنید...</option>
+        <option>دانش‌آموز / هنرجو</option>
+        <option>اساتید / معلم‌ها</option>
+        <option>معاونین / مدیریت مجموعه</option>
+        <option>ادمین (دسترسی کامل)</option>
+      </select>
+    </div>
+
+    <button onclick="register()">ادامه</button>
+
     <div class="switch">
       قبلاً ثبت نام کرده‌اید؟
       <a onclick="toggle()">ورود</a>
@@ -197,14 +224,25 @@ button:active{
 <script>
 
 function login(){
-  const code = document.getElementById("nationalCode").value;
+  const code = document.getElementById("securityCode").value;
 
-  if(code.length !== 10){
-    alert("کد ملی باید دقیقاً ۱۰ رقم باشد");
+  if(code.length < 4){
+    alert("کد امنیتی معتبر نیست");
     return;
   }
 
-  alert("اطلاعات ارسال شد (MVP)");
+  alert("ورود انجام شد (MVP)");
+}
+
+function register(){
+  const role = document.getElementById("roleSelect").value;
+
+  if(role === ""){
+    alert("لطفاً یک گزینه انتخاب کنید");
+    return;
+  }
+
+  alert("سطح انتخاب شد: " + role);
 }
 
 function toggle(){
