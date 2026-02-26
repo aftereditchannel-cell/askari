@@ -1,0 +1,63 @@
+/* صفحه لودر ساده و رقیق */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6b73ff, #000dff);
+  font-family: Arial, sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+.loader-container {
+  text-align: center;
+}
+
+.logo h1 {
+  font-size: 3rem;
+  margin: 0;
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+.logo p {
+  margin: 0;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  opacity: 0.8;
+  animation: fadeIn 2s ease-in-out forwards;
+}
+
+.animated-bar {
+  width: 200px;
+  height: 5px;
+  background: rgba(255,255,255,0.5);
+  margin: 20px auto 0 auto;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.animated-bar::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: #fff;
+  left: -50%;
+  animation: slide 2s infinite;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-10px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
+@keyframes slide {
+  0% { left: -50%; }
+  50% { left: 100%; }
+  100% { left: -50%; }
+}
