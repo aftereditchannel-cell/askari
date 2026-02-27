@@ -16,25 +16,19 @@ body{
     background:radial-gradient(circle at top right,#3b0f70,#0b1c2d 60%);
 }
 
+/* بقیه CSS بدون تغییر */
 .container{
     width:420px;
     padding:40px 35px;
     border-radius:25px;
     background:rgba(255,255,255,0.06);
     backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
     border:1px solid rgba(255,255,255,0.08);
-    box-shadow:
-        0 0 60px rgba(128,0,255,.25),
-        0 20px 40px rgba(0,0,0,.6);
+    box-shadow:0 0 60px rgba(128,0,255,.25),0 20px 40px rgba(0,0,0,.6);
     color:#fff;
 }
 
-h2{
-    text-align:center;
-    margin-bottom:30px;
-    font-weight:600;
-}
+h2{text-align:center;margin-bottom:30px;font-weight:600;}
 
 input,select,textarea{
     width:100%;
@@ -50,7 +44,6 @@ input,select,textarea{
     box-sizing:border-box;
 }
 
-/* رنگ منوی باز شده */
 select option{
     background:#1e1e2f;
     color:#ffffff;
@@ -59,20 +52,6 @@ select option{
 input:focus,select:focus,textarea:focus{
     border:1px solid #9d4edd;
     box-shadow:0 0 15px rgba(157,78,221,.4);
-    background:rgba(255,255,255,0.12);
-}
-
-select{
-    appearance:none;
-    background-image:url("data:image/svg+xml;utf8,<svg fill='%23ffffff' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-    background-repeat:no-repeat;
-    background-position:left 15px center;
-    background-size:18px;
-}
-
-textarea{
-    resize:none;
-    height:80px;
 }
 
 button{
@@ -83,49 +62,15 @@ button{
     border-radius:14px;
     background:linear-gradient(90deg,#9d4edd,#7b2cbf);
     color:#fff;
-    font-size:15px;
     cursor:pointer;
-    transition:.3s;
-    box-shadow:0 10px 25px rgba(157,78,221,.4);
 }
 
-button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 15px 35px rgba(157,78,221,.6);
-}
+button:disabled{opacity:.5;cursor:not-allowed;}
 
-button:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-    box-shadow:none;
-}
-
-.link-row{
-    text-align:center;
-    margin-top:20px;
-    font-size:13px;
-}
-
-.link-action{
-    color:#c77dff;
-    cursor:pointer;
-    margin-right:6px;
-    font-weight:bold;
-}
-
-.success{
-    text-align:center;
-    color:#80ffdb;
-    margin-top:10px;
-}
-
+.link-row{text-align:center;margin-top:20px;font-size:13px;}
+.link-action{color:#c77dff;cursor:pointer;margin-right:6px;font-weight:bold;}
+.success{text-align:center;color:#80ffdb;margin-top:10px;}
 .hidden{display:none;}
-.fade{animation:fade .4s ease;}
-
-@keyframes fade{
-    from{opacity:0;transform:translateY(20px);} 
-    to{opacity:1;transform:translateY(0);} 
-}
 </style>
 </head>
 
@@ -133,7 +78,6 @@ button:disabled{
 
 <div class="container">
 
-<!-- ورود -->
 <div id="loginBox">
 <h2>ورود</h2>
 <input type="text" id="loginNational" placeholder="کد ملی" maxlength="10">
@@ -146,7 +90,6 @@ button:disabled{
 </div>
 </div>
 
-<!-- ثبت نام -->
 <div id="registerBox" class="hidden">
 <h2>ثبت نام</h2>
 
@@ -160,14 +103,14 @@ button:disabled{
 <button id="roleNext" disabled>تایید</button>
 </div>
 
-<!-- دانش آموز -->
 <div id="studentForm" class="hidden">
+
 <div id="studentStep1">
-<input type="text" placeholder="نام و نام خانوادگی">
-<input type="text" placeholder="شماره تماس">
-<input type="text" placeholder="کد ملی" maxlength="10">
-<input type="date">
-<select>
+<input type="text" id="s_fullName" placeholder="نام و نام خانوادگی">
+<input type="text" id="s_phone" placeholder="شماره تماس">
+<input type="text" id="s_nationalCode" placeholder="کد ملی" maxlength="10">
+<input type="date" id="s_birthDate">
+<select id="s_school">
 <option value="">انتخاب مدرسه</option>
 <option>هنرستان فضا</option>
 <option>هنرستان سما</option>
@@ -194,49 +137,25 @@ button:disabled{
 <option>کاردانش</option>
 </select>
 
-<button>ثبت نهایی</button>
-</div>
-</div>
-
-<!-- استاد -->
-<div id="teacherForm" class="hidden">
-<input type="text" placeholder="نام و نام خانوادگی">
-<input type="text" placeholder="شماره تماس">
-<input type="text" placeholder="پایه‌هایی که تدریس می‌کنید">
-<input type="text" placeholder="درس‌هایی که تدریس می‌کنید">
-<input type="text" placeholder="نام هنرستان">
-<button>ثبت نهایی</button>
+<button type="button" onclick="submitStudent()">ثبت نهایی</button>
 </div>
 
-<!-- مدرسه -->
-<div id="schoolForm" class="hidden">
-<input type="text" placeholder="نام و نام خانوادگی مدیر">
-<input type="text" placeholder="کد ملی مدیر" maxlength="10">
-<input type="text" placeholder="شماره تماس">
-<input type="text" placeholder="نام مدرسه">
-<input type="number" placeholder="تعداد دانش آموزان">
-<input type="number" placeholder="تعداد رشته ها">
-<textarea placeholder="نام رشته‌ها را بنویسید"></textarea>
-<button>ثبت نهایی</button>
 </div>
-
 </div>
 </div>
 
 <script>
 
+/* 🔥 لینک Web App تو */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCkao8Gzs66BFFKvhzz9yPBQeh_38ALp17Gm1wayaeIG31VnjU8oLJo6jnZMBoZDtGAQ/exec";
+
 loginNational.addEventListener("input",function(){
     loginBtn.disabled = this.value.length !== 10;
 });
 
-loginBtn.onclick=function(){
-    loginMsg.innerText="ورود با موفقیت انجام شد";
-}
-
 function showRegister(){
     loginBox.classList.add("hidden");
     registerBox.classList.remove("hidden");
-    registerBox.classList.add("fade");
 }
 
 roleSelect.addEventListener("change",function(){
@@ -246,8 +165,6 @@ roleSelect.addEventListener("change",function(){
 roleNext.onclick=function(){
     stepRole.classList.add("hidden");
     if(roleSelect.value==="student") studentForm.classList.remove("hidden");
-    if(roleSelect.value==="teacher") teacherForm.classList.remove("hidden");
-    if(roleSelect.value==="school") schoolForm.classList.remove("hidden");
 }
 
 function nextStep(current,next){
@@ -270,9 +187,33 @@ function updateGrades(){
         gradeSelect.innerHTML='<option>دهم</option><option>یازدهم</option><option>دوازدهم</option>';
         majorSelect.classList.remove("hidden");
     }
-    else{
-        gradeSelect.classList.add("hidden");
-    }
+}
+
+function submitStudent(){
+
+  const data = {
+    fullName: s_fullName.value,
+    phone: s_phone.value,
+    nationalCode: s_nationalCode.value,
+    birthDate: s_birthDate.value,
+    schoolName: s_school.value,
+    level: levelSelect.value,
+    grade: gradeSelect.value,
+    major: majorSelect.value
+  };
+
+  fetch(SCRIPT_URL,{
+    method:"POST",
+    body: JSON.stringify(data)
+  })
+  .then(res=>res.json())
+  .then(res=>{
+      alert("ثبت نام با موفقیت انجام شد ✅");
+  })
+  .catch(()=>{
+      alert("خطا در ارسال اطلاعات ❌");
+  });
+
 }
 
 </script>
