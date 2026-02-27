@@ -16,7 +16,6 @@ body{
     background:radial-gradient(circle at top right,#3b0f70,#0b1c2d 60%);
 }
 
-/* بقیه CSS بدون تغییر */
 .container{
     width:420px;
     padding:40px 35px;
@@ -145,35 +144,49 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 </div>
 
 <script>
+/* 🔥 لینک Web App Google Sheets */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyv3FwqIkG_V8qRi3OOm4IpGnzWtA0Ii0kQ0BGWrT7tYrzBwLudRb3sb6zAFMUXup2_/exec";
 
-/* 🔥 لینک Web App تو */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_S2nmvF8d9DZEBSQwCFlmog6qESO6o1LZLz2GIR9UtM2gP1lfn0enkuiNPP6iO97F4A/exec";
+/* ورود */
+const loginNational = document.getElementById("loginNational");
+const loginBtn = document.getElementById("loginBtn");
 
-loginNational.addEventListener("input",function(){
+loginNational.addEventListener("input", function(){
     loginBtn.disabled = this.value.length !== 10;
 });
 
+/* نمایش فرم ثبت نام */
 function showRegister(){
-    loginBox.classList.add("hidden");
-    registerBox.classList.remove("hidden");
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("registerBox").classList.remove("hidden");
 }
+
+/* انتخاب نقش */
+const roleSelect = document.getElementById("roleSelect");
+const roleNext = document.getElementById("roleNext");
 
 roleSelect.addEventListener("change",function(){
     roleNext.disabled = this.value==="";
 });
 
-roleNext.onclick=function(){
-    stepRole.classList.add("hidden");
-    if(roleSelect.value==="student") studentForm.classList.remove("hidden");
+roleNext.onclick = function(){
+    document.getElementById("stepRole").classList.add("hidden");
+    if(roleSelect.value==="student") document.getElementById("studentForm").classList.remove("hidden");
 }
 
+/* مراحل فرم دانش آموز */
 function nextStep(current,next){
     document.getElementById(current).classList.add("hidden");
     document.getElementById(next).classList.remove("hidden");
 }
 
+/* بروزرسانی کلاس‌ها و رشته‌ها */
 function updateGrades(){
-    gradeSelect.innerHTML="";
+    const levelSelect = document.getElementById("levelSelect");
+    const gradeSelect = document.getElementById("gradeSelect");
+    const majorSelect = document.getElementById("majorSelect");
+
+    gradeSelect.innerHTML = "";
     gradeSelect.classList.remove("hidden");
     majorSelect.classList.add("hidden");
 
@@ -189,33 +202,37 @@ function updateGrades(){
     }
 }
 
+/* ارسال اطلاعات دانش آموز */
 function submitStudent(){
+    const data = {
+        fullName: document.getElementById("s_fullName").value,
+        phone: document.getElementById("s_phone").value,
+        nationalCode: document.getElementById("s_nationalCode").value,
+        birthDate: document.getElementById("s_birthDate").value,
+        schoolName: document.getElementById("s_school").value,
+        level: document.getElementById("levelSelect").value,
+        grade: document.getElementById("gradeSelect").value,
+        major: document.getElementById("majorSelect").value
+    };
 
-  const data = {
-    fullName: s_fullName.value,
-    phone: s_phone.value,
-    nationalCode: s_nationalCode.value,
-    birthDate: s_birthDate.value,
-    schoolName: s_school.value,
-    level: levelSelect.value,
-    grade: gradeSelect.value,
-    major: majorSelect.value
-  };
-
-  fetch(SCRIPT_URL,{
-    method:"POST",
-    body: JSON.stringify(data)
-  })
-  .then(res=>res.json())
-  .then(res=>{
-      alert("ثبت نام با موفقیت انجام شد ✅");
-  })
-  .catch(()=>{
-      alert("خطا در ارسال اطلاعات ❌");
-  });
-
+    fetch(SCRIPT_URL,{
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        alert("ثبت نام با موفقیت انجام شد ✅");
+        // ریست فرم
+        document.getElementById("studentForm").querySelectorAll("input,select").forEach(el=>el.value="");
+        document.getElementById("studentStep1").classList.remove("hidden");
+        document.getElementById("studentStep2").classList.add("hidden");
+    })
+    .catch(err=>{
+        console.error(err);
+        alert("خطا در ارسال اطلاعات ❌");
+    });
 }
-
 </script>
 
 </body>
