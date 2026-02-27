@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>سیستم ثبت نام</title>
-
 <style>
 body{
     margin:0;
@@ -15,7 +14,6 @@ body{
     align-items:center;
     background:radial-gradient(circle at top right,#3b0f70,#0b1c2d 60%);
 }
-
 .container{
     width:420px;
     padding:40px 35px;
@@ -26,9 +24,7 @@ body{
     box-shadow:0 0 60px rgba(128,0,255,.25),0 20px 40px rgba(0,0,0,.6);
     color:#fff;
 }
-
 h2{text-align:center;margin-bottom:30px;font-weight:600;}
-
 input,select,textarea{
     width:100%;
     padding:14px;
@@ -42,17 +38,14 @@ input,select,textarea{
     transition:.3s;
     box-sizing:border-box;
 }
-
 select option{
     background:#1e1e2f;
     color:#ffffff;
 }
-
 input:focus,select:focus,textarea:focus{
     border:1px solid #9d4edd;
     box-shadow:0 0 15px rgba(157,78,221,.4);
 }
-
 button{
     width:100%;
     padding:14px;
@@ -63,16 +56,13 @@ button{
     color:#fff;
     cursor:pointer;
 }
-
 button:disabled{opacity:.5;cursor:not-allowed;}
-
 .link-row{text-align:center;margin-top:20px;font-size:13px;}
 .link-action{color:#c77dff;cursor:pointer;margin-right:6px;font-weight:bold;}
 .success{text-align:center;color:#80ffdb;margin-top:10px;}
 .hidden{display:none;}
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -82,7 +72,6 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 <input type="text" id="loginNational" placeholder="کد ملی" maxlength="10">
 <button id="loginBtn" disabled>ادامه</button>
 <div class="success" id="loginMsg"></div>
-
 <div class="link-row">
 ثبت نام نکرده‌ای؟
 <span class="link-action" onclick="showRegister()">ثبت نام</span>
@@ -91,7 +80,6 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 
 <div id="registerBox" class="hidden">
 <h2>ثبت نام</h2>
-
 <div id="stepRole">
 <select id="roleSelect">
 <option value="">انتخاب نقش</option>
@@ -103,7 +91,6 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 </div>
 
 <div id="studentForm" class="hidden">
-
 <div id="studentStep1">
 <input type="text" id="s_fullName" placeholder="نام و نام خانوادگی">
 <input type="text" id="s_phone" placeholder="شماره تماس">
@@ -124,9 +111,7 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 <option value="middle">راهنمایی</option>
 <option value="high">دبیرستان</option>
 </select>
-
 <select id="gradeSelect" class="hidden"></select>
-
 <select id="majorSelect" class="hidden">
 <option value="">انتخاب رشته</option>
 <option>ریاضی</option>
@@ -135,27 +120,22 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 <option>فنی حرفه‌ای</option>
 <option>کاردانش</option>
 </select>
-
 <button type="button" onclick="submitStudent()">ثبت نهایی</button>
 </div>
-
 </div>
 </div>
 </div>
 
 <script>
-/* 🔥 لینک Web App Google Sheets */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyv3FwqIkG_V8qRi3OOm4IpGnzWtA0Ii0kQ0BGWrT7tYrzBwLudRb3sb6zAFMUXup2_/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5CtFPO89BPBfMZlHnpoAVZskEXULcMKEcWSjV8zGHr3iHk0DtH7jO73eG1dd79ogfZg/exec"; // 🔥 اینجا URL Web App جدیدت را قرار بده
 
 /* ورود */
 const loginNational = document.getElementById("loginNational");
 const loginBtn = document.getElementById("loginBtn");
-
 loginNational.addEventListener("input", function(){
     loginBtn.disabled = this.value.length !== 10;
 });
 
-/* نمایش فرم ثبت نام */
 function showRegister(){
     document.getElementById("loginBox").classList.add("hidden");
     document.getElementById("registerBox").classList.remove("hidden");
@@ -164,11 +144,9 @@ function showRegister(){
 /* انتخاب نقش */
 const roleSelect = document.getElementById("roleSelect");
 const roleNext = document.getElementById("roleNext");
-
 roleSelect.addEventListener("change",function(){
     roleNext.disabled = this.value==="";
 });
-
 roleNext.onclick = function(){
     document.getElementById("stepRole").classList.add("hidden");
     if(roleSelect.value==="student") document.getElementById("studentForm").classList.remove("hidden");
@@ -185,18 +163,15 @@ function updateGrades(){
     const levelSelect = document.getElementById("levelSelect");
     const gradeSelect = document.getElementById("gradeSelect");
     const majorSelect = document.getElementById("majorSelect");
-
     gradeSelect.innerHTML = "";
     gradeSelect.classList.remove("hidden");
     majorSelect.classList.add("hidden");
 
     if(levelSelect.value==="primary"){
         gradeSelect.innerHTML='<option>اول</option><option>دوم</option><option>سوم</option><option>چهارم</option><option>پنجم</option><option>ششم</option>';
-    }
-    else if(levelSelect.value==="middle"){
+    } else if(levelSelect.value==="middle"){
         gradeSelect.innerHTML='<option>هفتم</option><option>هشتم</option><option>نهم</option>';
-    }
-    else if(levelSelect.value==="high"){
+    } else if(levelSelect.value==="high"){
         gradeSelect.innerHTML='<option>دهم</option><option>یازدهم</option><option>دوازدهم</option>';
         majorSelect.classList.remove("hidden");
     }
@@ -222,7 +197,7 @@ function submitStudent(){
     })
     .then(res=>res.json())
     .then(res=>{
-        alert("ثبت نام با موفقیت انجام شد ✅");
+        alert(`ثبت نام با موفقیت انجام شد ✅\nID: ${res.id}\nتاریخ ثبت: ${new Date(res.registerDate).toLocaleString()}`);
         // ریست فرم
         document.getElementById("studentForm").querySelectorAll("input,select").forEach(el=>el.value="");
         document.getElementById("studentStep1").classList.remove("hidden");
