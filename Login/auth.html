@@ -127,7 +127,7 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5CtFPO89BPBfMZlHnpoAVZskEXULcMKEcWSjV8zGHr3iHk0DtH7jO73eG1dd79ogfZg/exec"; // 🔥 اینجا URL Web App جدیدت را قرار بده
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4GPVh7HVTjzqRtf5cv7ZYpGx6sk4Dgtm8Gxhtamjr6D-CmtnNrcfbfTd3PnUugWCw/exec";
 
 /* ورود */
 const loginNational = document.getElementById("loginNational");
@@ -177,36 +177,42 @@ function updateGrades(){
     }
 }
 
-/* ارسال اطلاعات دانش آموز */
-function submitStudent(){
-    const data = {
-        fullName: document.getElementById("s_fullName").value,
-        phone: document.getElementById("s_phone").value,
-        nationalCode: document.getElementById("s_nationalCode").value,
-        birthDate: document.getElementById("s_birthDate").value,
-        schoolName: document.getElementById("s_school").value,
-        level: document.getElementById("levelSelect").value,
-        grade: document.getElementById("gradeSelect").value,
-        major: document.getElementById("majorSelect").value
-    };
+/* تابع اصلی ثبت دانش‌آموز */
+async function submitStudent() {
+  const data = {
+    fullName: document.getElementById("s_fullName").value,
+    phone: document.getElementById("s_phone").value,
+    nationalCode: document.getElementById("s_nationalCode").value,
+    birthDate: document.getElementById("s_birthDate").value,
+    schoolName: document.getElementById("s_school").value,
+    level: document.getElementById("levelSelect").value,
+    grade: document.getElementById("gradeSelect").value,
+    major: document.getElementById("majorSelect").value
+  };
 
-    fetch(SCRIPT_URL,{
-        method:"POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    })
-    .then(res=>res.json())
-    .then(res=>{
-        alert(`ثبت نام با موفقیت انجام شد ✅\nID: ${res.id}\nتاریخ ثبت: ${new Date(res.registerDate).toLocaleString()}`);
-        // ریست فرم
-        document.getElementById("studentForm").querySelectorAll("input,select").forEach(el=>el.value="");
-        document.getElementById("studentStep1").classList.remove("hidden");
-        document.getElementById("studentStep2").classList.add("hidden");
-    })
-    .catch(err=>{
-        console.error(err);
-        alert("خطا در ارسال اطلاعات ❌");
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
+
+    const result = await res.json();
+
+    if (result.status === "success") {
+      alert(`ثبت نام با موفقیت انجام شد ✅\nID: ${result.id}\nتاریخ ثبت: ${new Date(result.registerDate).toLocaleString()}`);
+      
+      document.getElementById("studentForm").querySelectorAll("input,select").forEach(el => el.value = "");
+      document.getElementById("studentStep1").classList.remove("hidden");
+      document.getElementById("studentStep2").classList.add("hidden");
+    } else {
+      alert("خطا: " + result.message);
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("خطا در ارسال اطلاعات ❌\n" + err.message);
+  }
 }
 </script>
 
