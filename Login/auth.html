@@ -50,6 +50,12 @@ input,select,textarea{
     box-sizing:border-box;
 }
 
+/* رنگ منوی باز شده */
+select option{
+    background:#1e1e2f;
+    color:#ffffff;
+}
+
 input:focus,select:focus,textarea:focus{
     border:1px solid #9d4edd;
     box-shadow:0 0 15px rgba(157,78,221,.4);
@@ -94,12 +100,17 @@ button:disabled{
     box-shadow:none;
 }
 
-.link{
+.link-row{
     text-align:center;
     margin-top:20px;
     font-size:13px;
+}
+
+.link-action{
     color:#c77dff;
     cursor:pointer;
+    margin-right:6px;
+    font-weight:bold;
 }
 
 .success{
@@ -128,7 +139,11 @@ button:disabled{
 <input type="text" id="loginNational" placeholder="کد ملی" maxlength="10">
 <button id="loginBtn" disabled>ادامه</button>
 <div class="success" id="loginMsg"></div>
-<div class="link" onclick="showRegister()">ثبت نام نکرده‌اید؟</div>
+
+<div class="link-row">
+ثبت نام نکرده‌ای؟
+<span class="link-action" onclick="showRegister()">ثبت نام</span>
+</div>
 </div>
 
 <!-- ثبت نام -->
