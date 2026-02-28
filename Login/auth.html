@@ -126,19 +126,16 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 </div>
 </div>
 
-
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoR5_ocX6rd4Yb1LGRjmM8KxrJgEnCCe60_SHVaDDh_DD_JZHeDjSnkRtlsQXP3FQByA/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4GPVh7HVTjzqRtf5cv7ZYpGx6sk4Dgtm8Gxhtamjr6D-CmtnNrcfbfTd3PnUugWCw/exec";
 
 /* ورود */
 const loginNational = document.getElementById("loginNational");
 const loginBtn = document.getElementById("loginBtn");
-
 loginNational.addEventListener("input", function(){
     loginBtn.disabled = this.value.length !== 10;
 });
 
-/* نمایش ثبت نام */
 function showRegister(){
     document.getElementById("loginBox").classList.add("hidden");
     document.getElementById("registerBox").classList.remove("hidden");
@@ -147,89 +144,40 @@ function showRegister(){
 /* انتخاب نقش */
 const roleSelect = document.getElementById("roleSelect");
 const roleNext = document.getElementById("roleNext");
-
 roleSelect.addEventListener("change",function(){
     roleNext.disabled = this.value==="";
 });
-
 roleNext.onclick = function(){
     document.getElementById("stepRole").classList.add("hidden");
-    if(roleSelect.value==="student"){
-        document.getElementById("studentForm").classList.remove("hidden");
-    }
+    if(roleSelect.value==="student") document.getElementById("studentForm").classList.remove("hidden");
 }
 
-/* مرحله اول دانش آموز */
-const step1Inputs = [
-    document.getElementById("s_fullName"),
-    document.getElementById("s_phone"),
-    document.getElementById("s_nationalCode"),
-    document.getElementById("s_birthDate"),
-    document.getElementById("s_school")
-];
-
-const step1Btn = document.querySelector("#studentStep1 button");
-step1Btn.disabled = true;
-
-step1Inputs.forEach(input=>{
-    input.addEventListener("input", validateStep1);
-    input.addEventListener("change", validateStep1);
-});
-
-function validateStep1(){
-    const allFilled = step1Inputs.every(input => input.value.trim() !== "");
-    step1Btn.disabled = !allFilled;
-}
-
-/* مرحله دوم دانش آموز */
-const levelSelect = document.getElementById("levelSelect");
-const gradeSelect = document.getElementById("gradeSelect");
-const majorSelect = document.getElementById("majorSelect");
-const finalBtn = document.querySelector("#studentStep2 button");
-
-finalBtn.disabled = true;
-
-levelSelect.addEventListener("change", validateStep2);
-gradeSelect.addEventListener("change", validateStep2);
-majorSelect.addEventListener("change", validateStep2);
-
-function validateStep2(){
-    let valid = levelSelect.value !== "" && gradeSelect.value !== "";
-
-    if(levelSelect.value === "high"){
-        valid = valid && majorSelect.value !== "";
-    }
-
-    finalBtn.disabled = !valid;
-}
-
-/* مراحل فرم */
+/* مراحل فرم دانش آموز */
 function nextStep(current,next){
     document.getElementById(current).classList.add("hidden");
     document.getElementById(next).classList.remove("hidden");
 }
 
-/* بروزرسانی پایه */
+/* بروزرسانی کلاس‌ها و رشته‌ها */
 function updateGrades(){
+    const levelSelect = document.getElementById("levelSelect");
+    const gradeSelect = document.getElementById("gradeSelect");
+    const majorSelect = document.getElementById("majorSelect");
     gradeSelect.innerHTML = "";
     gradeSelect.classList.remove("hidden");
     majorSelect.classList.add("hidden");
 
     if(levelSelect.value==="primary"){
-        gradeSelect.innerHTML='<option value="">انتخاب پایه</option><option>اول</option><option>دوم</option><option>سوم</option><option>چهارم</option><option>پنجم</option><option>ششم</option>';
-    } 
-    else if(levelSelect.value==="middle"){
-        gradeSelect.innerHTML='<option value="">انتخاب پایه</option><option>هفتم</option><option>هشتم</option><option>نهم</option>';
-    } 
-    else if(levelSelect.value==="high"){
-        gradeSelect.innerHTML='<option value="">انتخاب پایه</option><option>دهم</option><option>یازدهم</option><option>دوازدهم</option>';
+        gradeSelect.innerHTML='<option>اول</option><option>دوم</option><option>سوم</option><option>چهارم</option><option>پنجم</option><option>ششم</option>';
+    } else if(levelSelect.value==="middle"){
+        gradeSelect.innerHTML='<option>هفتم</option><option>هشتم</option><option>نهم</option>';
+    } else if(levelSelect.value==="high"){
+        gradeSelect.innerHTML='<option>دهم</option><option>یازدهم</option><option>دوازدهم</option>';
         majorSelect.classList.remove("hidden");
     }
-
-    validateStep2();
 }
 
-/* ثبت دانش آموز */
+/* تابع اصلی ثبت دانش‌آموز */
 async function submitStudent() {
   const data = {
     fullName: document.getElementById("s_fullName").value,
@@ -237,9 +185,9 @@ async function submitStudent() {
     nationalCode: document.getElementById("s_nationalCode").value,
     birthDate: document.getElementById("s_birthDate").value,
     schoolName: document.getElementById("s_school").value,
-    level: levelSelect.value,
-    grade: gradeSelect.value,
-    major: majorSelect.value
+    level: document.getElementById("levelSelect").value,
+    grade: document.getElementById("gradeSelect").value,
+    major: document.getElementById("majorSelect").value
   };
 
   try {
@@ -252,10 +200,11 @@ async function submitStudent() {
     const result = await res.json();
 
     if (result.status === "success") {
-      alert("ثبت نام با موفقیت انجام شد ✅");
+      alert(`ثبت نام با موفقیت انجام شد ✅\nID: ${result.id}\nتاریخ ثبت: ${new Date(result.registerDate).toLocaleString()}`);
       
-      // انتقال به صفحه اصلی
-      window.location.href = "../main.html";
+      document.getElementById("studentForm").querySelectorAll("input,select").forEach(el => el.value = "");
+      document.getElementById("studentStep1").classList.remove("hidden");
+      document.getElementById("studentStep2").classList.add("hidden");
     } else {
       alert("خطا: " + result.message);
     }
