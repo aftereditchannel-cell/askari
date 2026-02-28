@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل دانش‌آموز</title>
+
+<style>
+body{
+    margin:0;
+    font-family:tahoma;
+    background:radial-gradient(circle at top right,#3b0f70,#0b1c2d 60%);
+    color:#fff;
+    display:flex;
+    min-height:100vh;
+}
+
+/* سایدبار */
+.sidebar{
+    width:240px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    padding:25px 15px;
+    box-shadow:0 0 30px rgba(128,0,255,.3);
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.menu-item{
+    padding:12px;
+    margin:10px 0;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.menu-item:hover{
+    background:rgba(157,78,221,.4);
+}
+
+/* محتوا */
+.main{
+    flex:1;
+    padding:30px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(15px);
+    box-shadow:0 10px 30px rgba(157,78,221,.3);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(157,78,221,.5);
+}
+
+.card h3{
+    margin-top:0;
+    margin-bottom:15px;
+    font-size:16px;
+}
+
+.list{
+    font-size:14px;
+    line-height:1.9;
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#9d4edd,#7b2cbf);
+    color:#fff;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    box-shadow:0 10px 25px rgba(157,78,221,.6);
+}
+
+@media(max-width:768px){
+    .sidebar{display:none;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>دانش‌آموز</h2>
+    <div class="menu-item">🏠 داشبورد</div>
+    <div class="menu-item">📚 کلاس‌های من</div>
+    <div class="menu-item">📝 تکالیف</div>
+    <div class="menu-item">📊 نمرات</div>
+    <div class="menu-item">📅 برنامه هفتگی</div>
+    <div class="menu-item">💬 پیام‌ها</div>
+    <div class="menu-item">⚙ تنظیمات</div>
+    <div class="menu-item" onclick="logout()">🚪 خروج</div>
+</div>
+
+<div class="main">
+
+<div class="topbar">
+    <h1>سلام 👋 خوش آمدی</h1>
+    <button>ویرایش پروفایل</button>
+</div>
+
+<div class="card-grid">
+
+<div class="card">
+    <h3>📚 کلاس‌های امروز</h3>
+    <div class="list">
+        ریاضی - ساعت 8:00<br>
+        فیزیک - ساعت 10:00<br>
+        ادبیات - ساعت 12:00
+    </div>
+</div>
+
+<div class="card">
+    <h3>📝 تکالیف فعال</h3>
+    <div class="list">
+        تمرین ریاضی (تا فردا)<br>
+        تحقیق فیزیک (3 روز دیگر)
+    </div>
+</div>
+
+<div class="card">
+    <h3>📊 میانگین نمرات</h3>
+    <div class="list">
+        ریاضی: 18<br>
+        فیزیک: 17<br>
+        ادبیات: 19
+    </div>
+</div>
+
+<div class="card">
+    <h3>📅 برنامه هفتگی</h3>
+    <div class="list">
+        شنبه: ریاضی - فیزیک<br>
+        یکشنبه: شیمی - عربی
+    </div>
+</div>
+
+<div class="card">
+    <h3>💬 پیام‌های جدید</h3>
+    <div class="list">
+        پیام جدید از استاد ریاضی<br>
+        اطلاعیه مدرسه
+    </div>
+</div>
+
+<div class="card">
+    <h3>🏆 وضعیت پیشرفت</h3>
+    <div class="list">
+        حضور: 95٪<br>
+        تکالیف انجام شده: 87٪
+    </div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+function logout(){
+    window.location.href="../Login/auth.html";
+}
+</script>
+
+</body>
+</html>
